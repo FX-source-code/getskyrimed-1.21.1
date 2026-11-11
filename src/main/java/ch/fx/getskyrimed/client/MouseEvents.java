@@ -1,6 +1,8 @@
 package ch.fx.getskyrimed.client;
 
 import ch.fx.getskyrimed.network.HandActionPayload;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.phys.HitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -15,8 +17,16 @@ public class MouseEvents {
     @SubscribeEvent
     public static void mouseEvents(InputEvent.InteractionKeyMappingTriggered event) {
         if (event.isAttack()) {
-            event.setCanceled(true);
-            PacketDistributor.sendToServer(new HandActionPayload(true));
+            HitResult hitResult = Minecraft.getInstance().hitResult;
+
+            if (hitResult == null) {
+                return;
+            }
+
+            if (hitResult.getType() != HitResult.Type.BLOCK) {
+                event.setCanceled(true);
+                PacketDistributor.sendToServer(new HandActionPayload(true));
+            }
         }
     }
 }
