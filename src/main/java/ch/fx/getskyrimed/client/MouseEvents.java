@@ -2,6 +2,7 @@ package ch.fx.getskyrimed.client;
 
 import ch.fx.getskyrimed.network.HandActionPayload;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -25,7 +26,12 @@ public class MouseEvents {
 
             if (hitResult.getType() != HitResult.Type.BLOCK) {
                 event.setCanceled(true);
-                PacketDistributor.sendToServer(new HandActionPayload(true));
+                if (hitResult instanceof EntityHitResult entityHit){
+                    PacketDistributor.sendToServer(new HandActionPayload(true, entityHit.getEntity().getId()));
+                }
+                else {
+                    PacketDistributor.sendToServer(new HandActionPayload(true, -1));
+                }
             }
         }
     }

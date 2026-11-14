@@ -1,6 +1,7 @@
 package ch.fx.getskyrimed.network;
 
-import net.minecraft.network.chat.Component;
+import ch.fx.getskyrimed.server.AttackHandler;
+import net.minecraft.world.entity.Entity;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -13,9 +14,7 @@ public class ModNetwork {
     @SubscribeEvent
     public static void registerPayloadHandlersEvent(RegisterPayloadHandlersEvent event){
         event.registrar("1").playToServer(HandActionPayload.TYPE, HandActionPayload.STREAM_CODEC,
-                (payload, context) -> {
-                    context.player().sendSystemMessage(Component.literal("Click gauche reçu !! ENFINNNN!"));
-                }
+                AttackHandler::leftHandAttack
         );
     }
 
