@@ -26,6 +26,8 @@ public class MouseEvents {
 
             if (hitResult.getType() != HitResult.Type.BLOCK) {
                 event.setCanceled(true);
+                event.setSwingHand(false);
+
                 if (hitResult instanceof EntityHitResult entityHit){
                     PacketDistributor.sendToServer(new HandActionPayload(true, entityHit.getEntity().getId()));
                 }

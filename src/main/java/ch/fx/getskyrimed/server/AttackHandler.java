@@ -20,13 +20,14 @@ public class AttackHandler {
 
         Entity entityHit = player.level().getEntity(payload.hitId());
 
+        player.swing(InteractionHand.OFF_HAND, true);
+
         if (payload.hitId() == -1) {
             player.sendSystemMessage(Component.literal("Miss"));
 
         } else if (entityHit != null && player.canInteractWithEntity(entityHit, 1)) {
             player.sendSystemMessage(Component.literal("An Entity was hit : " + entityHit.getName().getString()));
             damageEntity(entityHit, player, player.getItemInHand(InteractionHand.OFF_HAND));
-
         } else {
             player.sendSystemMessage(Component.literal("How the heck"));
         }
