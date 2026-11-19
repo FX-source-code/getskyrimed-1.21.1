@@ -1,5 +1,6 @@
 package ch.fx.getskyrimed;
 
+import ch.fx.getskyrimed.data.ModAttachments;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -32,6 +33,8 @@ public class GetSkyrimed {
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
+
+        ModAttachments.register(modEventBus);
 
     }
 
